@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-_!)zipldzzuac_2oz!ecp5@d&#gz2v5jz*k__2c2+#0#-y19^3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME', '')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if CODESPACE_NAME:
+    ALLOWED_HOSTS.append(f'{CODESPACE_NAME}-8000.app.github.dev')
 
 
 # Application definition
@@ -81,15 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'octofit_db',
-        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
-            'username': '',
-            'password': '',
-            'authSource': 'admin',
-            'authMechanism': '',
-        },
+            'host': 'mongodb://localhost:27017',
+        }
     }
 }
 
